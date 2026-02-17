@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0d3318;
+  --foreground: #ededed;
+  --neon-green: #4CB848;
+  --neon-green-rgb: 76, 184, 72;
+  --neon-blue-rgb: 59, 130, 246;
+  --neon-red-rgb: 239, 68, 68;
 }
 
 @theme inline {
@@ -10,17 +14,111 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --animate-points-flash: points-flash 0.6s ease-out;
+  --animate-crown-pulse: crown-pulse 2s ease-in-out infinite;
+  --animate-green-shimmer: green-shimmer 3s ease-in-out infinite;
+  --animate-leader-glow: leader-glow 3s ease-in-out infinite;
+  --animate-border-rotate: border-rotate 4s linear infinite;
+  --animate-skeleton-pulse: skeleton-pulse 1.5s ease-in-out infinite;
+  --animate-slide-in: slide-in 0.4s ease-out both;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes points-flash {
+  0% {
+    background-color: rgba(76, 184, 72, 0);
+    transform: scale(1);
+  }
+  30% {
+    background-color: rgba(76, 184, 72, 0.15);
+    transform: scale(1.02);
+  }
+  100% {
+    background-color: rgba(76, 184, 72, 0);
+    transform: scale(1);
+  }
+}
+
+@keyframes crown-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.85;
+  }
+}
+
+@keyframes green-shimmer {
+  0% {
+    border-color: rgba(76, 184, 72, 0.3);
+  }
+  50% {
+    border-color: rgba(76, 184, 72, 0.7);
+  }
+  100% {
+    border-color: rgba(76, 184, 72, 0.3);
+  }
+}
+
+@keyframes leader-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(76, 184, 72, 0.2), 0 0 60px rgba(76, 184, 72, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(76, 184, 72, 0.35), 0 0 80px rgba(76, 184, 72, 0.15);
+  }
+}
+
+@keyframes border-rotate {
+  0% {
+    --border-angle: 0deg;
+  }
+  100% {
+    --border-angle: 360deg;
+  }
+}
+
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.leader-card {
+  --border-angle: 0deg;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(rgba(76, 184, 72, 0.12), rgba(76, 184, 72, 0.05)) padding-box,
+    conic-gradient(from var(--border-angle), #4CB848, #2dd4bf, #4CB848, #22c55e, #4CB848) border-box;
+  animation: border-rotate 4s linear infinite, leader-glow 3s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
