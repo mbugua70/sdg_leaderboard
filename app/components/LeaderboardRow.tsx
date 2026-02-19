@@ -4,8 +4,6 @@ import { useState, useCallback } from "react";
 import type { TeamData } from "@/app/types/leaderboard";
 import AnimatedNumber from "./AnimatedNumber";
 
-const ROW_HEIGHT = 88;
-
 interface LeaderboardRowProps {
   team: TeamData;
   index: number;
@@ -25,24 +23,21 @@ export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
 
   const isLeader = team.rank === 1;
   const isSecond = team.rank === 2;
-  const isThird = team.rank === 3;
+  const isThird  = team.rank === 3;
 
+  // Outer div is a flex child in the sled (flex-1 = equal share of sled height)
   return (
     <div
-      className="absolute left-0 right-0 px-2 lg:px-4"
-      style={{
-        top: index * ROW_HEIGHT,
-        transition: "top 0.5s ease-in-out",
-      }}
+      className="flex-1 min-h-0 px-2 lg:px-4 py-0.5"
     >
       <div
         className={`
-          flex items-center gap-3 lg:gap-6 rounded-xl px-4 lg:px-8 py-4
+          h-full flex items-center gap-3 lg:gap-6 rounded-xl px-4 lg:px-8
           transition-all duration-300 backdrop-blur-sm
           animate-slide-in
           ${
             isLeader
-              ? "leader-card scale-[1.02] lg:scale-[1.03]"
+              ? "leader-card scale-x-[1.02] lg:scale-x-[1.03]"
               : isSecond
                 ? "border border-blue-400/30 bg-blue-950/30"
                 : isThird
@@ -58,7 +53,7 @@ export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
         <div
           className={`
             flex-shrink-0 flex items-center justify-center rounded-lg font-bold
-            w-10 h-10 lg:w-14 lg:h-14 text-lg lg:text-2xl
+            w-10 h-10 lg:w-12 lg:h-12 text-lg lg:text-2xl
             ${
               isLeader
                 ? "bg-green-500/20 text-green-300"
@@ -86,10 +81,10 @@ export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
             flex-1 font-semibold truncate
             ${
               isLeader
-                ? "text-green-200 text-xl lg:text-3xl 2xl:text-4xl"
+                ? "text-green-200 text-xl lg:text-2xl 2xl:text-3xl"
                 : isSecond || isThird
-                  ? "text-zinc-200 text-lg lg:text-2xl 2xl:text-3xl"
-                  : "text-zinc-300 text-base lg:text-xl 2xl:text-2xl"
+                  ? "text-zinc-200 text-lg lg:text-xl 2xl:text-2xl"
+                  : "text-zinc-300 text-base lg:text-lg 2xl:text-xl"
             }
           `}
         >
@@ -102,10 +97,10 @@ export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
             flex-shrink-0 font-mono font-bold tabular-nums
             ${
               isLeader
-                ? "text-green-300 text-2xl lg:text-4xl 2xl:text-5xl"
+                ? "text-green-300 text-2xl lg:text-3xl 2xl:text-4xl"
                 : isSecond || isThird
-                  ? "text-zinc-200 text-xl lg:text-3xl 2xl:text-4xl"
-                  : "text-zinc-400 text-lg lg:text-2xl 2xl:text-3xl"
+                  ? "text-zinc-200 text-xl lg:text-2xl 2xl:text-3xl"
+                  : "text-zinc-400 text-lg lg:text-xl 2xl:text-2xl"
             }
           `}
         >
@@ -120,5 +115,3 @@ export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
     </div>
   );
 }
-
-export { ROW_HEIGHT };

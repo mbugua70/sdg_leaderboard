@@ -3,7 +3,7 @@ import Leaderboard from "@/app/components/Leaderboard";
 export default function Home() {
   return (
     <div
-      className="min-h-screen flex items-start justify-center pt-12 lg:pt-20 relative"
+      className="h-dvh flex flex-col py-6 lg:py-8 relative overflow-hidden"
       style={{
         background: `
           radial-gradient(ellipse 80% 50% at 50% 0%, rgba(76, 184, 72, 0.3) 0%, transparent 60%),
