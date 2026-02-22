@@ -140,7 +140,7 @@ export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
 
         {/* Team logo */}
         <TeamLogo
-          logoUrl={team.log_url}
+          logoUrl={team.logo_url}
           teamName={team.team_name}
           isLeader={isLeader}
           isSecond={isSecond}

@@ -23,7 +23,7 @@ export function useLeaderboard() {
         .map((t) => ({
           team_name: t.team_name,
           total_points: Number(t.total_points) || 0,
-          log_url: t.log_url,
+          logo_url: t.logo_url,
         }))
         .sort((a, b) => b.total_points - a.total_points);
 
@@ -34,7 +34,7 @@ export function useLeaderboard() {
         return {
           team_name: t.team_name,
           total_points: t.total_points,
-          log_url: t.log_url,
+          logo_url: t.logo_url,
           rank: i + 1,
           previousPoints: prev ?? null,
           pointsChanged: prev !== undefined && prev !== t.total_points,
