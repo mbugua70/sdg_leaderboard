@@ -9,6 +9,79 @@ interface LeaderboardRowProps {
   index: number;
 }
 
+function TeamLogo({
+  logoUrl,
+  teamName,
+  isLeader,
+  isSecond,
+  isThird,
+}: {
+  logoUrl?: string;
+  teamName: string;
+  isLeader: boolean;
+  isSecond: boolean;
+  isThird: boolean;
+}) {
+  const [imgError, setImgError] = useState(false);
+
+  const sizeClass = isLeader
+    ? "w-12 h-12 lg:w-14 lg:h-14"
+    : "w-10 h-10 lg:w-12 lg:h-12";
+
+  const ringClass = isLeader
+    ? "ring-2 ring-green-400 shadow-[0_0_20px_rgba(74,222,128,0.7),0_0_8px_rgba(74,222,128,0.4)]"
+    : isSecond
+      ? "ring-2 ring-blue-400/70 shadow-[0_0_12px_rgba(96,165,250,0.35)]"
+      : isThird
+        ? "ring-2 ring-amber-400/70 shadow-[0_0_12px_rgba(251,191,36,0.35)]"
+        : "ring-1 ring-white/10";
+
+  const fallbackBg = isLeader
+    ? "bg-gradient-to-br from-green-700/60 to-green-900/60 text-green-200"
+    : isSecond
+      ? "bg-gradient-to-br from-blue-700/40 to-blue-900/40 text-blue-200"
+      : isThird
+        ? "bg-gradient-to-br from-amber-700/40 to-amber-900/40 text-amber-200"
+        : "bg-gradient-to-br from-zinc-700/30 to-zinc-900/30 text-zinc-400";
+
+  const initial = teamName.charAt(0).toUpperCase();
+  const textSize = isLeader
+    ? "text-lg lg:text-xl font-bold"
+    : "text-sm lg:text-base font-semibold";
+
+  return (
+    <div className="relative flex-shrink-0">
+      <div
+        className={`${sizeClass} rounded-full overflow-hidden ring-offset-1 ring-offset-black/50 ${ringClass} transition-shadow duration-500`}
+      >
+        {logoUrl && !imgError ? (
+          <img
+            src={logoUrl}
+            alt={teamName}
+            className="w-full h-full object-cover"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div
+            className={`w-full h-full flex items-center justify-center ${fallbackBg} ${textSize}`}
+          >
+            {initial}
+          </div>
+        )}
+      </div>
+
+      {isLeader && (
+        <span
+          className="absolute -top-2 -right-1.5 text-sm lg:text-base animate-crown-pulse select-none pointer-events-none"
+          aria-hidden="true"
+        >
+          👑
+        </span>
+      )}
+    </div>
+  );
+}
+
 export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
   const [flashing, setFlashing] = useState(team.pointsChanged);
 
@@ -25,14 +98,11 @@ export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
   const isSecond = team.rank === 2;
   const isThird  = team.rank === 3;
 
-  // Outer div is a flex child in the sled (flex-1 = equal share of sled height)
   return (
-    <div
-      className="flex-1 min-h-0 px-2 lg:px-4 py-0.5"
-    >
+    <div className="flex-1 min-h-0 px-2 lg:px-4 py-0.5">
       <div
         className={`
-          h-full flex items-center gap-3 lg:gap-6 rounded-xl px-4 lg:px-8
+          h-full flex items-center gap-3 lg:gap-5 rounded-xl px-4 lg:px-6
           transition-all duration-300 backdrop-blur-sm
           animate-slide-in
           ${
@@ -49,11 +119,11 @@ export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
         style={{ animationDelay: `${index * 80}ms` }}
         onAnimationEnd={handleAnimationEnd}
       >
-        {/* Rank */}
+        {/* Rank badge */}
         <div
           className={`
             flex-shrink-0 flex items-center justify-center rounded-lg font-bold
-            w-10 h-10 lg:w-12 lg:h-12 text-lg lg:text-2xl
+            w-9 h-9 lg:w-11 lg:h-11 text-base lg:text-xl
             ${
               isLeader
                 ? "bg-green-500/20 text-green-300"
@@ -68,12 +138,14 @@ export default function LeaderboardRow({ team, index }: LeaderboardRowProps) {
           {team.rank}
         </div>
 
-        {/* Crown for leader */}
-        {isLeader && (
-          <span className="text-2xl lg:text-3xl animate-crown-pulse flex-shrink-0">
-            👑
-          </span>
-        )}
+        {/* Team logo */}
+        <TeamLogo
+          logoUrl={team.log_url}
+          teamName={team.team_name}
+          isLeader={isLeader}
+          isSecond={isSecond}
+          isThird={isThird}
+        />
 
         {/* Team name */}
         <div

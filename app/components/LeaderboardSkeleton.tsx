@@ -4,12 +4,17 @@ export default function LeaderboardSkeleton() {
       {Array.from({ length: 5 }).map((_, i) => (
         <div
           key={i}
-          className="flex items-center gap-6 rounded-xl px-8 py-4 border border-green-500/5 bg-green-950/10 backdrop-blur-sm animate-skeleton-pulse"
+          className="flex items-center gap-3 lg:gap-5 rounded-xl px-4 lg:px-6 py-3 border border-green-500/5 bg-green-950/10 backdrop-blur-sm animate-skeleton-pulse"
           style={{ animationDelay: `${i * 150}ms` }}
         >
-          <div className="w-14 h-14 rounded-lg bg-green-500/5" />
-          <div className="flex-1 h-6 rounded bg-green-500/5" />
-          <div className="w-24 h-8 rounded bg-green-500/5" />
+          {/* Rank badge */}
+          <div className="w-9 h-9 lg:w-11 lg:h-11 rounded-lg bg-green-500/5 flex-shrink-0" />
+          {/* Logo circle */}
+          <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-green-500/5 flex-shrink-0" />
+          {/* Team name */}
+          <div className="flex-1 h-5 rounded-md bg-green-500/5" />
+          {/* Points */}
+          <div className="w-20 h-7 rounded-md bg-green-500/5 flex-shrink-0" />
         </div>
       ))}
     </div>
