@@ -124,7 +124,7 @@ export default function Leaderboard() {
           ))}
         </div>
 
-        <div className="text-center mb-4 lg:mb-5">
+        {/* <div className="text-center mb-4 lg:mb-5">
           <h1 className="text-3xl lg:text-5xl 2xl:text-6xl font-bold tracking-tight">
             <span className="text-white">Safaricom </span>
             <span style={{ color: "#4CB848" }}>SDG Challenge</span>
@@ -132,7 +132,7 @@ export default function Leaderboard() {
           <p className="text-zinc-400 mt-1.5 text-sm lg:text-base font-medium">
             Race to 2030 — Accelerating a Digital Future
           </p>
-        </div>
+        </div> */}
 
         {error && (
           <div className="mb-3 rounded-lg bg-red-950/50 border border-red-800/50 px-4 py-3 text-red-300 text-sm text-center">
